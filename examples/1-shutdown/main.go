@@ -22,6 +22,8 @@ func main() {
 	// thread is panicking.
 	defer recoverer()
 
+    flag.Parse()
+
 	// create the same server as before, with a simple `ping` handler
 	server := http.Server{
 		Addr:    fmt.Sprintf(":%d", *port),

@@ -23,6 +23,7 @@ var (
 )
 
 func main() {
+    defer recoverer()
 	flag.Parse()
 
 	// these outline the typical REST mapping of create/read/update/delete
@@ -266,4 +267,11 @@ func deleteTodoItem(w http.ResponseWriter, r *http.Request) {
 	todoItems = append(todoItems[:id], todoItems[id+1:]...)
 
 	w.WriteHeader(http.StatusOK)
+}
+
+func recoverer() {
+	if r := recover(); r != nil {
+		fmt.Fprintf(os.Stderr, "unexpected panic occurred: %v", r)
+		os.Exit(1)
+	}
 }
