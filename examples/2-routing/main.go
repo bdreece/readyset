@@ -34,7 +34,6 @@ func main() {
 	// returns a single todo item by id
 	router.HandleFunc("GET /todo-item/{id}", getTodoItem)
 	// returns status 200 if the item exists, 404 otherwise.
-	//
 	// this is basically the above GET request, but without sending
 	// down the response body. you'll see in the handler code.
 	router.HandleFunc("HEAD /todo-item/{id}", getTodoItemExists)
@@ -74,10 +73,15 @@ func main() {
 	fmt.Println("goodbye :)")
 }
 
+// returns the list of todo items.
 func getTodoItems(w http.ResponseWriter, r *http.Request) {
+	// http.ResponseWriter implements the io.Writer interface,
+	// so we can write JSON directly to the response body using
+	// a json.Encoder.
 	_ = json.NewEncoder(w).Encode(todoItems)
 }
 
+// returns a single todo item
 func getTodoItem(w http.ResponseWriter, r *http.Request) {
 	// get the {id} from /todo-item/{id}, converted to int
 	id, err := strconv.Atoi(r.PathValue("id"))
@@ -99,6 +103,7 @@ func getTodoItem(w http.ResponseWriter, r *http.Request) {
 	_ = json.NewEncoder(w).Encode(item)
 }
 
+// returns whether a todo item exists
 func getTodoItemExists(w http.ResponseWriter, r *http.Request) {
 	// get the {id} from /todo-item/{id}, converted to int
 	id, err := strconv.Atoi(r.PathValue("id"))
@@ -119,6 +124,7 @@ func getTodoItemExists(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+// creates a todo item
 func createTodoItem(w http.ResponseWriter, r *http.Request) {
 	// parse form values as strings from request body
 	if err := r.ParseForm(); err != nil {
@@ -150,6 +156,7 @@ func createTodoItem(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 }
 
+// replaces a todo item
 func replaceTodoItem(w http.ResponseWriter, r *http.Request) {
 	// get the {id} from /todo-item/{id}, converted to int
 	id, err := strconv.Atoi(r.PathValue("id"))
@@ -196,6 +203,7 @@ func replaceTodoItem(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+// updates a todo item
 func updateTodoItem(w http.ResponseWriter, r *http.Request) {
 	// get the {id} from /todo-item/{id}, converted to int
 	id, err := strconv.Atoi(r.PathValue("id"))
@@ -245,6 +253,7 @@ func updateTodoItem(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 }
 
+// deletes a todo item
 func deleteTodoItem(w http.ResponseWriter, r *http.Request) {
 	// get the {id} from /todo-item/{id}, converted to int
 	id, err := strconv.Atoi(r.PathValue("id"))
