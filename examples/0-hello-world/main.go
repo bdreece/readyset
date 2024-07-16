@@ -58,5 +58,8 @@ func main() {
 }
 
 func helloWorld(w http.ResponseWriter, r *http.Request) {
+	// write HTTP status 200 and the response headers
+	w.WriteHeader(http.StatusOK)
+	// write "hello, world!" to the response body
 	_, _ = w.Write([]byte("hello, world!"))
 }
