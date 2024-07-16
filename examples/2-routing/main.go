@@ -23,7 +23,7 @@ var (
 )
 
 func main() {
-    defer recoverer()
+	defer recoverer()
 	flag.Parse()
 
 	// these outline the typical REST mapping of create/read/update/delete
