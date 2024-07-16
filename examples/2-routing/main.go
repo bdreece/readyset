@@ -263,7 +263,7 @@ func deleteTodoItem(w http.ResponseWriter, r *http.Request) {
 
 	// delete the todo item (in Go this is done by appending
 	// the two slices of the array that don't contain the id).
-    todoItems = append(todoItems[:id], todoItems[id+1:]...)
+	todoItems = append(todoItems[:id], todoItems[id+1:]...)
 
 	w.WriteHeader(http.StatusOK)
 }
